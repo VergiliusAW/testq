@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="../../css/dark-mode.css">
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/register.js"></script>
+    <script src="../../js/anime-master/lib/anime.min.js"></script>
+    <script type="text/javascript" src="../../js/anime-register.js"></script>
+</head>
+<body>
+<div class="page">
+    <div class="page-content">
+        <div class="form">
+            <form class="login-form">
+                <div class="rsatu-logo">
+                    <img src="../../resources/images/RSATU-logo-material-grey.svg"/>
+                </div>
+                <div class="login">
+                    <div class="mb-37 log">
+                        <div class="l">
+                            <input id="email" class="input" type="text" name="email" autocomplete="off">
+                            <label class="label">
+                                <span class="focus-input">Логин</span>
+                            </label>
+                        </div>
+                        <div class="ul">
+                            <div class="error">
+                                <span class="error-msg">Ошибка</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-37 pas">
+                        <div class="l">
+                            <input id="password" class="input" type="password" name="password">
+                            <label class="label">
+                                <span class="focus-input">Пароль</span>
+                            </label>
+                        </div>
+                        <div class="ul">
+                            <div class="error">
+                                <span class="error-msg">Ошибка</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-37 pas-repeat">
+                        <div class="l">
+                            <input id="password-repeat" class="input" type="password" name="password" autocomplete="off">
+                            <label class="label">
+                                <span class="focus-input">Повторите пароль</span>
+                            </label>
+                        </div>
+                        <div class="ul">
+                            <div class="error">
+                                <span class="error-msg">Ошибка</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sign-in">
+                    <button class="sign-in-b">
+                        Зарегистрироваться
+                    </button>
+                </div>
+                <div class="sign-up">
+                    <span class="txt-sign-up">Уже есть аккаунт ? </span>
+                    <a class="txt-sign-up" href="/login">Войти</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

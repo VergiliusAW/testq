@@ -1,0 +1,270 @@
+/* [FONT] */
+/*
+@font-face {
+font-family: Poppins-Regular;
+src: url('../fonts/poppins/Poppins-Regular.ttf'); 
+}
+
+@font-face {
+font-family: Poppins-Medium;
+src: url('../fonts/poppins/Poppins-Medium.ttf'); 
+}
+
+@font-face {
+font-family: Poppins-Bold;
+src: url('../fonts/poppins/Poppins-Bold.ttf'); 
+}
+
+@font-face {
+font-family: Poppins-SemiBold;
+src: url('../fonts/poppins/Poppins-SemiBold.ttf'); 
+}
+*/
+  
+/* [ОБЩИЕ СТИЛИ] */
+* {
+    margin: 0px; 
+    padding: 0px; 
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #1e1e1e;
+}
+
+body,html {
+    height: 100%;
+}
+
+body {
+    background-color: #1e1e1e;
+}
+
+.page {
+    font-family: sans-serif;
+}
+
+/* [СТИЛИ ССЫЛОК] */
+a {
+    line-height: 1.2;
+    margin: 0px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:focus {
+    outline: none !important;
+}
+
+a:hover {
+    color: #8A2BE2;
+}
+
+/* [IMAGE] */
+img {
+    max-width: 100%;
+    height: auto;
+    content: url('../src/images/RSATU-logo-material-grey.svg');
+}
+
+.rsatu-logo {
+    padding-bottom: 66px;
+}
+
+/* [INPUT] */
+
+.mb-37 {
+    margin-bottom: 37px;
+}
+
+.l {
+    line-height: 1.2;
+    width: 100%;
+    height: 60px;
+    position: relative;
+}
+
+.pas {
+    position: relative;
+}
+
+.log {
+    position: relative;
+}
+
+.pas-repeat {
+    position: relative;
+}
+
+.input {
+    color: #555555;
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+    display: inline-block;
+    border-bottom: 2px solid #adadad;
+    position: relative;
+}
+
+/*.l label {*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    bottom: 0px;*/
+/*    left: 0%;*/
+/*    pointer-events: none;*/
+/*    border-bottom: 2px solid #adadad;*/
+/*}*/
+
+/*.l label::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    border-bottom: 2px solid transparent;*/
+/*    border-image: linear-gradient(to right, #21d4fd , #b721ff);*/
+/*    border-image-slice: 2;*/
+/*    transform: translateX(-100%);*/
+/*    transition: all 0.4s ease;*/
+/*}*/
+
+.focus-input {
+    color: #555555;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    pointer-events: none;
+    white-space: pre;
+    /*transition: all 0.4s ease;*/
+}
+
+.label {
+    display: block;
+    width: 0;
+    position: absolute;
+}
+
+/*.input:focus + .label .focus-input,*/
+/*.input:valid + .label .focus-input {*/
+/*    transform: translateY(-200%);*/
+/*    font-size: 14px;*/
+/*}*/
+
+/*.input:focus + .label::after,*/
+/*.input:valid + .label::after {*/
+/*    transform: translateX(0%);*/
+/*}*/
+
+/* [НЕПРАВИЛЬНЫЙ EMAIL] */
+
+.error {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    border-radius: 5px;
+    padding: 5px;
+    background: #393939;
+    box-shadow: 1px 1px 5px #1e1e1e;
+    height: 0;
+}
+
+.error-msg {
+    color: #FF4B4A;
+    font-size: 14px;
+}
+
+/* [ВОССТАНОВЛЕНИЕ ПАРОЛЯ] */
+
+.f {
+    text-align: right;
+}
+
+.forgot-password {
+    font-size: 12px;
+}
+
+/* [BUTTON] */
+button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.sign-in {
+    margin-top: 30px;
+    margin-bottom: 37px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*.sign-in:hover {*/
+/*    background: -webkit-linear-gradient(left, #21d4fd, #b721ff);*/
+/*    color: #6a7dfe;*/
+/*}*/
+
+.sign-in-b {
+    border-radius: 10px;
+    border: 2px solid #adadad;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #1e1e1e;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 50px;
+    background-color:  #fff;
+}
+
+.sign-in-b:hover {
+    /*color: #FF4B4A;*/
+    color: #8A2BE2;
+    border: 2px solid #8A2BE2;
+}
+
+/* [PAGE-CONTENT] */
+.page-content {
+    width: 100%;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+
+/* [FORM] */
+.form {
+    width: 390px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 66px 50px 33px 50px;
+    box-shadow: 0 5px 15px 1px #8A2BE2;
+}
+
+.login-form {
+    width: 100%;
+}
+
+/* [SING UP] */
+
+.sign-up {
+    text-align: center;
+}
+
+/* [RECOVER PAGE] */
+
+.txt1 {
+    padding: 10px;
+    text-align: center;
+}  
