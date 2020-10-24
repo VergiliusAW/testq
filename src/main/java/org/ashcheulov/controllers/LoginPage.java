@@ -1,4 +1,4 @@
-package org.ashcheulov;
+package org.ashcheulov.controllers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,7 +16,7 @@ public class LoginPage {
     @GET
     public Response getLoginPage() {
 //        return new File("../src/main/resources/META-INF/resources/login.html");
-        String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/login.html"), "UTF-8").useDelimiter("\\A").next();
+        String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/login.html"), "UTF-8").useDelimiter("\\A").next();
         return Response.status(200).entity(text).build();
     }
 

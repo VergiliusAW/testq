@@ -14,7 +14,7 @@ public class InternalServerErrorExceptionHandler implements ExceptionMapper<Inte
 
     @Override
     public Response toResponse(InternalServerErrorException exception) {
-        String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/500.html"), "UTF-8").useDelimiter("\\A").next();
+        String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/500.html"), "UTF-8").useDelimiter("\\A").next();
         return Response.status(500).entity(text).build();
     }
 }
