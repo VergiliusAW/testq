@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class RecoverPage {
 
     @GET
-    public Response getRecover() {
+    public Response getRecoverPage() {
         String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/recover.html"), "UTF-8").next();
         return Response.status(200).entity(text).build();
     }

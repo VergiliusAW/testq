@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class IndexPage {
 
     @GET
-//    @Produces(MediaType.TEXT_HTML)
     public Response getIndexPage() {
         String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/index.html"), "UTF-8").next();
         return Response.status(200).entity(text).build();

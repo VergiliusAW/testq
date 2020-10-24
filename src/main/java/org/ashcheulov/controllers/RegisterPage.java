@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class RegisterPage {
 
     @GET
-    public Response getLoginPage() {
+    public Response getRegisterPage() {
         String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/register.html"), "UTF-8").useDelimiter("\\A").next();
         return Response.status(200).entity(text).build();
     }
