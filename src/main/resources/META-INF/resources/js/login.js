@@ -16,12 +16,12 @@ $(document).ready(function(){
             // }
         } else {
             e.preventDefault();
-            // showEmailError()
-            const popcorn = document.querySelector('#popcorn');
-            const tooltip = document.querySelector('#tooltip');
-            createPopper(popcorn, tooltip, {
-                placement: 'bottom-start',
-            });
+            showEmailError()
+            // const popcorn = document.querySelector('#popcorn');
+            // const tooltip = document.querySelector('#tooltip');
+            // createPopper(popcorn, tooltip, {
+            //     placement: 'bottom-start',
+            // });
         }
         
     });
@@ -83,8 +83,5 @@ $(document).ready(function(){
     function isEmail(email) {
         var regex = /^([a-zA-Z]{1})+([a-zA-Z0-9_.])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,10})+$/;
         return regex.test(email);
-    }
-    function login(email, password) {
-        return (email==base_email)&&(password==base_password);
     }
   });
