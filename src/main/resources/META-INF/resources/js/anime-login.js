@@ -3,6 +3,9 @@ $(document).ready(function () {
     if ($("#email").val() !== '') {
         animeUp('.log .focus-input')
     }
+    if ($("#password").val() !== '') {
+        animeUp('.pas .focus-input')
+    }
 
     $(".input").focus(function () {
         if ($(this).attr('id') === 'email') {

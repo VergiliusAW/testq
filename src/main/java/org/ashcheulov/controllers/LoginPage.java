@@ -1,13 +1,16 @@
 package org.ashcheulov.controllers;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.net.http.HttpHeaders;
+import java.net.URI;
 import java.util.Scanner;
 
 @Path("/login")
@@ -15,17 +18,27 @@ public class LoginPage {
 
     @GET
     public Response getLoginPage() {
-//        return new File("../src/main/resources/META-INF/resources/login.html");
-        String text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/login.html"), "UTF-8").useDelimiter("\\A").next();
-        return Response.status(200).entity(text).build();
+        String text;
+        try {
+            text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/login.html"), "UTF-8").useDelimiter("\\A").next();
+        } catch (NullPointerException e) {
+            throw new InternalServerErrorException();
+        }
+        return Response.status(200).entity(text).type(MediaType.TEXT_HTML).build();
     }
 
     @POST
-    public Response login(HttpHeaders headers) {
-        if (headers.map().get("email").get(0).equals("mikhail@local.com") &&
-                headers.map().get("password").get(0).equals("123456")) {
-            System.out.println("mikhail longin");
-        }
-        return Response.status(200).build();
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response login(JsonObject jsonObject) {
+        System.out.println(jsonObject.toString());
+        String email = jsonObject.getString("email");
+        String password = jsonObject.getString("password");
+        if (email.equals("mikhail@local.com") && password.equals("123456")) {
+            System.out.println("mikhail login");
+            JsonObject json = new JsonObject();
+            json.put("location","/profile");
+            return Response.status(200).entity(json.toString()).cookie(NewCookie.valueOf("session")).build();
+        } else
+            return Response.status(403).contentLocation(URI.create("/login")).build();
     }
 }
