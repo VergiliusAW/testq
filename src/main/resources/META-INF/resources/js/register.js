@@ -6,7 +6,20 @@ $(document).ready(function(){
         //
         if (isEmail($("#email").val())) {
             if ($("#password").val()===$("#password-repeat").val()) {
-                e.default()
+                let formData = {
+                    'email': $('input[name=email]').val(),
+                    'password': $('input[name=password]').val(),
+                };
+                $.post( "register", JSON.stringify(formData)).done(function(data) {
+                    let json = JSON.parse(data)
+                    if (json.location) {
+                        // data.redirect contains the string URL to redirect to
+                        location.href = json.location;
+                    }
+                }).fail(function () {
+                    showEmailError()
+                    showPasswordError()
+                })
             } else {
                 showPasswordError()
                 showPasswordRepeatError()
@@ -19,7 +32,6 @@ $(document).ready(function(){
             //     // swal("ОШИБКА", "Неправильный логин или пароль")
             // }
         } else {
-            e.preventDefault()
             showEmailError()
         }
         

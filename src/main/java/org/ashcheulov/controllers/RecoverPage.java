@@ -1,5 +1,7 @@
 package org.ashcheulov.controllers;
 
+import org.springframework.stereotype.Controller;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.Path;

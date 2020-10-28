@@ -1,4 +1,6 @@
-package org.ashcheulov;
+package org.ashcheulov.controllers.errors;
+
+import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
@@ -9,6 +11,7 @@ import java.util.Scanner;
 /**
  * NotFoundExceptionMapper
  */
+@Controller
 @Provider
 public class NotFoundExceptionHandler implements ExceptionMapper<NotFoundException> {
 

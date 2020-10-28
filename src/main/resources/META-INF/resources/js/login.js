@@ -39,19 +39,8 @@ $(document).ready(function () {
                 'email': $('input[name=email]').val(),
                 'password': $('input[name=password]').val(),
             };
-            // e.default();
-            // if (login($("#email").val(),$("#password").val())) {
-            //     location.href = '/'
-            // } else {
-            //     showPasswordError()
-            //     showEmailError()
-            //     // swal("ОШИБКА", "Неправильный логин или пароль")
-            // } {"email":"mikhail@local.com","password:"123456"}
             $.post( "login", JSON.stringify(formData)).done(function(data) {
-                // alert(headers)
-                // $.get("profile")
                 var json = JSON.parse(data)
-                // alert(json.location)
                 if (json.location) {
                     // data.redirect contains the string URL to redirect to
                     location.href = json.location;
@@ -59,7 +48,6 @@ $(document).ready(function () {
             }).fail(function () {
                 showEmailError()
                 showPasswordError()
-                // alert("error")
             })
 
 

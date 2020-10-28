@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
+import org.ashcheulov.models.TemplateDB;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Cookie;
@@ -15,6 +18,13 @@ import java.util.Scanner;
 
 @Path("/login")
 public class LoginPage {
+
+    private final TemplateDB templateDB;
+
+    @Autowired
+    public LoginPage(TemplateDB templateDB) {
+        this.templateDB = templateDB;
+    }
 
     @GET
     public Response getLoginPage() {
@@ -33,11 +43,12 @@ public class LoginPage {
         System.out.println(jsonObject.toString());
         String email = jsonObject.getString("email");
         String password = jsonObject.getString("password");
-        if (email.equals("mikhail@local.com") && password.equals("123456")) {
-            System.out.println("mikhail login");
+        if (templateDB.login(email,password)) {
+            System.out.println("user login");
             JsonObject json = new JsonObject();
             json.put("location","/profile");
-            return Response.status(200).entity(json.toString()).cookie(NewCookie.valueOf("session")).build();
+            Cookie c = new Cookie(password, email);
+            return Response.status(200).entity(json.toString()).cookie(new NewCookie(c)).build();
         } else
             return Response.status(403).contentLocation(URI.create("/login")).build();
     }
