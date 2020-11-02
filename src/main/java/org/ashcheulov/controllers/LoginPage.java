@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
+import org.ashcheulov.models.HibernateDB_users;
 import org.ashcheulov.models.TemplateDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
