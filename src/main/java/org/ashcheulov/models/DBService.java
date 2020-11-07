@@ -22,8 +22,8 @@ public class DBService {
         JsonArray array = new JsonArray();
         array.add(getPostById(1));
         array.add(getPostById(3));
-//        array.add(getPostById(2));
-        System.out.println(array.toString());
+        array.add(getPostById(2));
+//        System.out.println(array.toString());
         return array;
     }
 }
