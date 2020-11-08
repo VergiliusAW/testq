@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prod" : "next build && next export && mv out/* ../resources/META-INF/resources",
+    "prod": "next build && next export && mv out/* ../resources/META-INF/resources",
     "build2": "next build && next export"
   },
   "dependencies": {

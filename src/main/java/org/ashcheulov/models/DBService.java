@@ -23,6 +23,9 @@ public class DBService {
         array.add(getPostById(1));
         array.add(getPostById(3));
         array.add(getPostById(2));
+        array.add(getPostById(4));
+        array.add(getPostById(5));
+        array.add(getPostById(6));
 //        System.out.println(array.toString());
         return array;
     }

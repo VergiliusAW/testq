@@ -1,0 +1,45 @@
+body {
+    min-width: 500px;
+    margin: 0;
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+header {
+    width: auto;
+    height: auto;
+    background: #282c34;
+    color: #fff;
+    min-height: 2rem;
+    padding: 0rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header h1 {
+    margin-left: 2rem;
+}
+
+header #login {
+    margin-left: auto;
+    margin-right: 2rem;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.main h1 {
+    text-align: center;
+}
+
+footer {
+    margin-bottom: 0;
+}
