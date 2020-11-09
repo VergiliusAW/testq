@@ -1,14 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
 import ArticleList from './components/articles/ArticlesList'
-import LoginButton from "./components/button/LoginButton";
+import LoginButton from './components/button/LoginButton'
+import Post from './components/post/Post'
+import {BrowserRouter as Router, Route, Switch,} from "react-router-dom"
 
 ReactDOM.render(
-  <React.StrictMode>
-      <ArticleList/>
-  </React.StrictMode>,
-  document.getElementById('articles')
+    <React.StrictMode>
+        <Router>
+            <Switch>
+                <Route exact path={'/'}>
+                    <ArticleList/>
+                </Route>
+                <Route exact path={'/post/*'}>
+                    <Post/>
+                </Route>
+            </Switch>
+        </Router>
+    </React.StrictMode>,
+    document.getElementById('page-content')
 );
 
 ReactDOM.render(

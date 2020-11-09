@@ -1,5 +1,8 @@
 body {
-    min-width: 500px;
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    min-width: 375px;
     margin: 0;
     -ms-overflow-style: none;
 }
@@ -10,11 +13,11 @@ body::-webkit-scrollbar {
 
 header {
     width: auto;
-    height: auto;
     background: #282c34;
     color: #fff;
-    min-height: 2rem;
-    padding: 0rem;
+    height: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -40,6 +43,16 @@ header #login {
     text-align: center;
 }
 
+#page-content {
+    width: 100rem;
+}
+
 footer {
-    margin-bottom: 0;
+    margin-top:auto;
+}
+
+@media screen and (max-width: 375px) {
+    body {
+        font-size: 0.75rem;
+    }
 }

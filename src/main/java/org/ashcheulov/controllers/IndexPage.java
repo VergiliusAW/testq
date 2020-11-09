@@ -1,8 +1,6 @@
 package org.ashcheulov.controllers;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.Scanner;
 
@@ -21,11 +19,11 @@ public class IndexPage {
     }
 
     @GET
-    @Path("post")
-    public Response getPostPage() {
+    @Path("post/{id}")
+    public Response getPostPage(@PathParam("id") int id) {
         String text;
         try {
-            text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/post.html"), "UTF-8").useDelimiter("\\A").next();
+            text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/index.html"), "UTF-8").useDelimiter("\\A").next();
         } catch (NullPointerException e) {
             throw new InternalServerErrorException();
         }
