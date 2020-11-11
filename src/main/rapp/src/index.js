@@ -4,7 +4,7 @@ import './index.css'
 import ArticleList from './components/articles/ArticlesList'
 import LoginButton from './components/button/LoginButton'
 import Post from './components/post/Post'
-import {BrowserRouter as Router, Route, Switch,} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 
 ReactDOM.render(
     <React.StrictMode>

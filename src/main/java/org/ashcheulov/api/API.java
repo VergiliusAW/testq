@@ -7,10 +7,11 @@ import org.ashcheulov.models.DBService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 
 @Path("api")
-public class Posts {
+public class API {
 
     @GET
     @Path("/post/{id}")
@@ -24,13 +25,14 @@ public class Posts {
         return DBService.getPosts();
     }
 
+
     @POST
-    @Path("login")
+    @Path("system")
     @Consumes(MediaType.APPLICATION_JSON)
-    public JsonObject login(JsonObject s) {
+    public Response login(JsonObject s) {
         System.out.println(s.toString());
         JsonObject jsonObject = new JsonObject();
-        jsonObject.put("res","успех");
-        return jsonObject;
+        jsonObject.put("res",true);
+        return Response.ok(jsonObject).build();
     }
 }
