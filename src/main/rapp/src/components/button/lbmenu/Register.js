@@ -1,13 +1,14 @@
 import React from 'react'
 import '../LoginButton.css'
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             focusedL: false,
             focusedP: false,
+            focusedPP: false
         }
     }
 
@@ -43,9 +44,24 @@ class Login extends React.Component {
                         id={'password'}
                         type={'password'}/>
                 </div>
+                <div
+                    className={'cool-input ' + (this.state.focusedPP ? 'focused ' : ' ') + (this.props.errorRepPassword ? 'error' : '')}>
+                    <span>Повторите пароль</span>
+                    <input
+                        onClick={() => {
+                            this.props.errorRepPasswordHandler()
+                        }}
+                        onBlur={() => this.setState({focusedPP: false})}
+                        onFocus={() => this.setState({focusedPP: true})}
+                        onChange={
+                            event => this.props.repPasswordLabelHandler(event)
+                        }
+                        id={'password'}
+                        type={'password'}/>
+                </div>
             </form>
         )
     }
 }
 
-export default Login
+export default Register

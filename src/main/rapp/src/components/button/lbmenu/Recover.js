@@ -1,7 +1,7 @@
 import React from 'react'
 import '../LoginButton.css'
 
-class Login extends React.Component {
+class Recover extends React.Component {
 
     constructor(props) {
         super(props);
@@ -28,24 +28,9 @@ class Login extends React.Component {
                         }
                         id={'email'}/>
                 </div>
-                <div
-                    className={'cool-input ' + (this.state.focusedP ? 'focused ' : ' ') + (this.props.errorPassword ? 'error' : '')}>
-                    <span>Пароль</span>
-                    <input
-                        onClick={() => {
-                            this.props.errorPasswordHandler()
-                        }}
-                        onBlur={() => this.setState({focusedP: false})}
-                        onFocus={() => this.setState({focusedP: true})}
-                        onChange={
-                            event => this.props.passwordLabelHandler(event)
-                        }
-                        id={'password'}
-                        type={'password'}/>
-                </div>
             </form>
         )
     }
 }
 
-export default Login
+export default Recover

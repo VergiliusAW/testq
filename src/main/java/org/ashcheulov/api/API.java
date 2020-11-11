@@ -32,7 +32,9 @@ public class API {
     public Response login(JsonObject s) {
         System.out.println(s.toString());
         JsonObject jsonObject = new JsonObject();
-        jsonObject.put("res",true);
+        // sl – success Login; srg – success Register; src – success Recover;
+        // er – error Login; erg – error register; erc – error Recover
+        jsonObject.put("res","sl");
         return Response.ok(jsonObject).build();
     }
 }
