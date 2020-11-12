@@ -47,4 +47,16 @@ public class DBService {
         }
         return array;
     }
+
+    public static boolean login() {
+        return true;
+    }
+
+    public static boolean register() {
+        return true;
+    }
+
+    public static boolean recover() {
+        return true;
+    }
 }

@@ -29,15 +29,4 @@ public class IndexPage {
         }
         return Response.status(200).entity(text).build();
     }
-
-//    @POST
-//    public Response getIndexPageAfterPost() {
-//        String text;
-//        try {
-//            text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/index.html"), "UTF-8").useDelimiter("\\A").next();
-//        } catch (NullPointerException e) {
-//            throw new InternalServerErrorException();
-//        }
-//        return Response.status(200).entity(text).build();
-//    }
 }
