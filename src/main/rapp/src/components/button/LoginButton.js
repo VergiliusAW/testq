@@ -7,21 +7,20 @@ import './LoginButton.css'
 
 export default class LoginButton extends React.Component {
     state = {
-        // Перевести
-        error: false,
-
         errorRepPassword: false,
         errorPassword: false,
         errorEmail: false,
-
         show: false,
-        type: "login",
+        type: 'login',
         enterButtonText: "Войти",
         dataL: {
             action: () => this.setState({show: true})
         },
         dataCancel: {
-            action: () => this.setState({show: false})
+            action: () => {
+                this.resetError()
+                this.setState({show: false})
+            }
         },
         dataEnter: {
             action: () => {
@@ -46,6 +45,11 @@ export default class LoginButton extends React.Component {
         email: '',
         password: '',
         repPassword: ''
+    }
+
+    validateEmail(email) {
+        const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        return regex.test(email)
     }
 
     loginTab() {
@@ -104,64 +108,108 @@ export default class LoginButton extends React.Component {
         this.setState({errorRepPassword: true})
     }
 
+    setEmailError() {
+        this.setState({errorEmail: true})
+    }
+
+    setPasswordError() {
+        this.setState({errorPassword: true})
+    }
+
+    setRepPasswordError() {
+        this.setState({errorRepPassword: true})
+    }
+
+    setPasError() {
+        this.setState({errorPassword: true})
+        this.setState({errorRepPassword: true})
+    }
+
     submit(type) {
+        this.resetError()
+        if (this.validateEmail(this.state.email)) {
+            var data
+            // eslint-disable-next-line default-case
+            var p = this.state.errorPassword
+            var pp = this.state.errorRepPassword
 
-        var data
-        // eslint-disable-next-line default-case
-        switch (type) {
-            case 'login':
-                data = {
-                    type: type,
-                    email: this.state.email,
-                    password: this.state.password
-                }
-                break
-            case 'register':
-                data = {
-                    type: type,
-                    email: this.state.email,
-                    password: this.state.password,
-                    repPassword: this.state.repPassword
-                }
-                break
-            case 'recover':
-                data = {
-                    type: type,
-                    email: this.state.email
-                }
-                break
-        }
-
-        const url = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
-        fetch(url + '/api/system', {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(res => res.json())
-            .then(
-                (result) => {
-                    if (result.res === 'sl') {
-                        this.resetError()
-                        this.setState({show: false})
-                    } else if (result.res === 'srg') {
-                        this.resetError()
-                        this.setState({show: false})
-                    } else if (result.res === 'src') {
-                        this.resetError()
-                        this.setState({show: false})
-                    } else {
-                        console.log(result)
-                        this.setAllError()
+            switch (type) {
+                case 'login':
+                    if (!(this.state.password === ''))
+                        data = {
+                            type: type,
+                            email: this.state.email,
+                            password: this.state.password
+                        }
+                    else {
+                        p = true
+                        this.setPasswordError()
                     }
-                },
-                (error) => {
-                    console.log(error)
-                    this.setAllError()
-                })
-
+                    break
+                case 'register':
+                    if (!(this.state.password === ''))
+                        if (!(this.state.repPassword === ''))
+                            if (this.state.password === this.state.repPassword)
+                                data = {
+                                    type: type,
+                                    email: this.state.email,
+                                    password: this.state.password,
+                                    repPassword: this.state.repPassword
+                                }
+                            else {
+                                p = true
+                                pp = true
+                                this.setPasError()
+                            }
+                        else {
+                            pp = true
+                            this.setRepPasswordError()
+                        }
+                    else {
+                        p = true
+                        this.setPasswordError()
+                    }
+                    break
+                case 'recover':
+                    data = {
+                        type: type,
+                        email: this.state.email
+                    }
+                    break
+            }
+            if (!this.state.errorEmail && !p && !pp) {
+                const url = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+                fetch(url + '/api/system', {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json())
+                    .then(
+                        (result) => {
+                            if (result.res === 'sl') {
+                                this.resetError()
+                                this.setState({show: false})
+                            } else if (result.res === 'srg') {
+                                this.resetError()
+                                this.setState({show: false})
+                            } else if (result.res === 'src') {
+                                this.resetError()
+                                this.setState({show: false})
+                            } else {
+                                this.setAllError()
+                            }
+                        },
+                        (error) => {
+                            console.log(error)
+                            this.setAllError()
+                        })
+            }
+        } else {
+            this.setEmailError()
+        }
     }
 
     render() {

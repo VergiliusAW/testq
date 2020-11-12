@@ -56,7 +56,7 @@ class Register extends React.Component {
                         onChange={
                             event => this.props.repPasswordLabelHandler(event)
                         }
-                        id={'password'}
+                        id={'rep-password'}
                         type={'password'}/>
                 </div>
             </form>
