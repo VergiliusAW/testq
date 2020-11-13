@@ -44,7 +44,8 @@ header #login {
 }
 
 #page-content {
-    /*width: 100;*/
+    width: -moz-available;
+    width: -webkit-fill-available;
     margin: 0;
 }
 

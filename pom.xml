@@ -48,6 +48,16 @@
 <!--      <version>1.16.1</version>-->
 <!--    </dependency>-->
 
+<!--   HIBERNATE   -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm</artifactId>
+    </dependency>
+    <!-- JDBC driver dependencies -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>io.quarkus</groupId>

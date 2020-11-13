@@ -5,6 +5,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.ashcheulov.models.DBService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,16 +14,19 @@ import javax.ws.rs.core.Response;
 @Path("api")
 public class API {
 
+    @Inject
+    DBService dbService;
+
     @GET
     @Path("/post/{id}")
     public JsonObject getPost(@PathParam("id") int id) {
-        return DBService.getPostById(id);
+        return dbService.getPostById(id);
     }
 
     @GET
     @Path("posts")
     public JsonArray getPosts() {
-        return DBService.getPosts();
+        return dbService.getPosts();
     }
 
 
@@ -48,7 +52,7 @@ public class API {
 
     private JsonObject login(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
-        if (DBService.login())
+        if (dbService.login())
             jsonObject.put("res","sl");
         else
             jsonObject.put("res","er");
@@ -57,7 +61,7 @@ public class API {
 
     private JsonObject register(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
-        if (DBService.register())
+        if (dbService.register())
             jsonObject.put("res","srg");
         else
             jsonObject.put("res","erg");
@@ -65,7 +69,7 @@ public class API {
     }
     private JsonObject recover(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
-        if (DBService.recover())
+        if (dbService.recover())
             jsonObject.put("res","src");
         else
             jsonObject.put("res","erc");

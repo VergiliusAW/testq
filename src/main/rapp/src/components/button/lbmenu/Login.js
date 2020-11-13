@@ -26,7 +26,8 @@ class Login extends React.Component {
                         onChange={
                             event => this.props.emailLabelHandler(event)
                         }
-                        id={'email'}/>
+                        id={'email'}
+                    />
                 </div>
                 <div
                     className={'cool-input ' + (this.state.focusedP ? 'focused ' : ' ') + (this.props.errorPassword ? 'error' : '')}>
