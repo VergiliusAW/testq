@@ -24,7 +24,11 @@ public class Posts {
     private String body;
 
     @Column(name = "author_id")
-    private int author;
+    private int author_id;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "author_id", insertable = false, updatable = false)
+    private Users users;
 
     public int getId() {
         return id;
@@ -50,11 +54,19 @@ public class Posts {
         this.title = title;
     }
 
-    public int getAuthor() {
-        return author;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setAuthor(int author) {
-        this.author = author;
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public int getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(int author_id) {
+        this.author_id = author_id;
     }
 }
