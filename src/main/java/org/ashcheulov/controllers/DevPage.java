@@ -10,7 +10,9 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Path("dev")
 public class DevPage {
@@ -20,23 +22,38 @@ public class DevPage {
 
     @GET
     public Response getDevPage(@CookieParam("session") Cookie cookie) {
+
+        File f = new File("/home/mikhail/Документы");
+        f.isDirectory();
+        Arrays.stream(f.listFiles()).collect(Collectors.toList()).forEach(i -> System.out.println(i));
 //        if (cookie != null)
 //            if (cookie.getValue().equals("256fa90e-f71d-4667-b362-0c7d67d06724"))
 //                return Response.ok("success").build();
 //            else System.out.println(cookie.toString());
-        return Response.ok(dbService.login(new JsonObject())).cookie(new NewCookie("session", UUID.randomUUID().toString())).build();
+        return Response.ok("aaa").cookie(new NewCookie("session", UUID.randomUUID().toString())).build();
     }
 
     @GET
     @Path("img")
-    @Produces("image/png")
-    public File getImg(@CookieParam("session") Cookie cookie) {
+    public JsonObject getImg(@CookieParam("session") Cookie cookie) {
 //        return null;
+        JsonObject jsonObject = new JsonObject();
         if (cookie != null)
-            if (cookie.getValue().equals("256fa90e-f71d-4667-b362-0c7d67d06724")) //favicon.ico
-                return new File("../src/main/resources/favicon.ico");
+            if (cookie.getValue().equals("e1403c79-12a5-4f62-96af-31ec1662144f")) {
+                jsonObject.put("session",true);
+                jsonObject.put("href","/dev/img/1");
+                return jsonObject;
+            }
             else System.out.println(cookie.toString());
-        return new File("../src/main/resources/logo192.png");
+        jsonObject.put("session",false);
+        return jsonObject;
+    }
+
+    @GET
+    @Path("img/1")
+    @Produces("image/png")
+    public File getImgByLink() {
+        return new File("../src/main/resources/favicon.ico");
     }
 
     @GET

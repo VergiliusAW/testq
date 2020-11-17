@@ -45,11 +45,6 @@ public class API {
             default:
                 throw new WebApplicationException();
         }
-//        JsonObject jsonObject = new JsonObject();
-        // sl – success Login; srg – success Register; src – success Recover;
-        // er – error Login; erg – error register; erc – error Recover
-//        jsonObject.put("res","sl");
-//        return throw new InternalServerErrorException();
     }
 
     private JsonObject login(JsonObject req) {

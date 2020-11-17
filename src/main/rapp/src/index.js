@@ -6,6 +6,7 @@ import LoginButton from './components/button/LoginButton'
 import Post from './components/post/Post'
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import Profile from './components/profile/Profile'
+import BorI from './components/button/BorI'
 
 ReactDOM.render(
     <React.StrictMode>
@@ -28,7 +29,7 @@ ReactDOM.render(
 
 ReactDOM.render(
     <React.StrictMode>
-        <LoginButton/>
+        <BorI/>
     </React.StrictMode>,
     document.getElementById('login')
 )

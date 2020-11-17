@@ -28,6 +28,9 @@ public class Users {
     @OneToMany(mappedBy = "author_id")
     private List<Posts> posts;
 
+    @OneToMany(mappedBy = "user_id")
+    private List<Sessions> sessions;
+
     public int getId() {
         return id;
     }
@@ -66,5 +69,13 @@ public class Users {
 
     public void setPosts(List<Posts> posts) {
         this.posts = posts;
+    }
+
+    public List<Sessions> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Sessions> sessions) {
+        this.sessions = sessions;
     }
 }
