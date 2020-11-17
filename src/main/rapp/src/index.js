@@ -5,6 +5,7 @@ import ArticleList from './components/articles/ArticlesList'
 import LoginButton from './components/button/LoginButton'
 import Post from './components/post/Post'
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
+import Profile from './components/profile/Profile'
 
 ReactDOM.render(
     <React.StrictMode>
@@ -15,6 +16,9 @@ ReactDOM.render(
                 </Route>
                 <Route exact path={'/post/*'}>
                     <Post/>
+                </Route>
+                <Route exact path={'/profile'}>
+                    <Profile/>
                 </Route>
             </Switch>
         </Router>

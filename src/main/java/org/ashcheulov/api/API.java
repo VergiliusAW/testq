@@ -42,17 +42,19 @@ public class API {
                 return Response.ok(register(s)).build();
             case "recover":
                 return Response.ok(recover(s)).build();
+            default:
+                throw new WebApplicationException();
         }
-        JsonObject jsonObject = new JsonObject();
+//        JsonObject jsonObject = new JsonObject();
         // sl – success Login; srg – success Register; src – success Recover;
         // er – error Login; erg – error register; erc – error Recover
-        jsonObject.put("res","sl");
-        return Response.ok(jsonObject).build();
+//        jsonObject.put("res","sl");
+//        return throw new InternalServerErrorException();
     }
 
     private JsonObject login(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
-        if (dbService.login())
+        if (dbService.login(req))
             jsonObject.put("res","sl");
         else
             jsonObject.put("res","er");
@@ -61,7 +63,7 @@ public class API {
 
     private JsonObject register(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
-        if (dbService.register())
+        if (dbService.register(req))
             jsonObject.put("res","srg");
         else
             jsonObject.put("res","erg");
@@ -69,7 +71,7 @@ public class API {
     }
     private JsonObject recover(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
-        if (dbService.recover())
+        if (dbService.recover(req))
             jsonObject.put("res","src");
         else
             jsonObject.put("res","erc");

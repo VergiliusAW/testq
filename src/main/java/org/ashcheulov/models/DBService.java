@@ -4,17 +4,16 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.ashcheulov.models.tables.Posts;
 import org.ashcheulov.models.tables.Users;
+import org.hibernate.Session;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @ApplicationScoped
 public class DBService {
@@ -24,23 +23,17 @@ public class DBService {
 
     /**
      * Получение полного поста по id
+     *
      * @param id
      * @return
      */
     public JsonObject getPostById(int id) {
-//        JsonObject jsonObject = new JsonObject();
-//        // Обращение к бд и получение кортежа по id
-//        jsonObject.put("id", id);
-//        jsonObject.put("title", "TITLE");
-//         //Полное тело статьи
-//        jsonObject.put("body", "Lorem ipsum quisque volutpat bibendum nec placerat luctus diam, eu consequat placerat viverra curae eleifend et suspendisse sociosqu, condimentum ipsum nec proin massa suscipit scelerisque eget nisl mauris odio amet mollis curabitur viverra id leo, adipiscing curabitur porta aptent ad aliquam lobortis nisl, vulputate eget curae dictum justo vulputate iaculis condimentum nibh tellus lectus tempus quisque ullamcorper curabitur hendrerit libero eros donec auctor mollis sapien laoreet augue vulputate egestas lacus sapien, velit aliquet suscipit nostra elementum potenti.");
-//        jsonObject.put("author","admin");
-//        jsonObject.put("date","1 nov 2020");
-        return postToJSON(entityManager.find(Posts.class,1));
+        return postToJSON(entityManager.find(Posts.class, id));
     }
 
     /**
      * Получить первью поста по id
+     *
      * @param id
      * @return
      */
@@ -55,6 +48,7 @@ public class DBService {
 
     /**
      * Получение всех постов
+     *
      * @return
      */
     public JsonArray getPosts() {
@@ -73,48 +67,105 @@ public class DBService {
         return array;
     }
 
-    public boolean login() {
+    /**
+     * Логин. На сервер поступает запрос на логин. Сервер обращается к бд. Ищет пользователя с указанным логином
+     * и паролем. Если находит, то возвращает true, иначе false
+     *
+     * @param req
+     * @return
+     */
+    public boolean login(JsonObject req) {
         Users user = new Users();
-        user.setEmail("a@a.a");
-        user.setPassword("123");
-        Map<String,Object> map = new HashMap<>();
-        map.put("id",1);
-//        map.put("password",user.getPassword());
+        user.setEmail(req.getString("email"));
+        user.setPassword(req.getString("password"));
 
-        System.out.println(entityManager.find(Users.class,map).getRole());
-//        if (entityManager)
-//            return true;
-//        else
+        List<Users> usersList = entityManager.createQuery("SELECT u FROM Users u WHERE u.email=:e and u.password=:p",
+                Users.class)
+                .setParameter("e", user.getEmail())
+                .setParameter("p", user.getPassword()).getResultList();
+
+        if (usersList.size() == 1)
+            return true;
+        else
             return false;
     }
 
-    public boolean register() {
-        return true;
+    /**
+     * Регистрация. На сервер поступает запрос на регистрацию. Сервер проверяет, нет ли уж зарегистрированного
+     * пользователя с таким логином и паролем. Если нет, то добавляет в бд.
+     *
+     * @param req
+     * @return
+     */
+    public boolean register(JsonObject req) {
+        Users client = new Users();
+        client.setEmail(req.getString("email"));
+        client.setPassword(req.getString("password"));
+        client.setRole("client");
+
+        List<Users> usersList = entityManager.createQuery("SELECT u FROM Users u WHERE u.email=:e and u.password=:p",
+                Users.class)
+                .setParameter("e", client.getEmail())
+                .setParameter("p", client.getPassword()).getResultList();
+
+        if (usersList.size() == 0) {
+            Session session = entityManager.unwrap(Session.class);
+            session.save(client);
+            session.close();
+            return true;
+        } else
+            return false;
     }
 
-    public boolean recover() {
-        return true;
+    /**
+     * Восстановление. На сервер поступает запрос на восстановление пароля. Сервер обращается к бд и проверяет есть ли
+     * пользователь с таким логином. Если есть, то высылает письмо с ссылкой на смену логина.
+     *
+     * @param req
+     * @return
+     */
+    public boolean recover(JsonObject req) {
+        Users user = new Users();
+        user.setEmail(req.getString("email"));
+
+        List<Users> usersList = entityManager.createQuery("SELECT u FROM Users u WHERE u.email=:e",
+                Users.class)
+                .setParameter("e", user.getEmail()).getResultList();
+        if (usersList.size() != 0)
+            return true;
+        else
+            return false;
     }
 
+    /**
+     * Переводит полученную запись из таблицы posts в формат JSON
+     *
+     * @param post
+     * @return
+     */
     private JsonObject postToJSON(Posts post) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.put("id",post.getId());
-        jsonObject.put("title",post.getTitle());
-        jsonObject.put("body",post.getBody());
+        jsonObject.put("id", post.getId());
+        jsonObject.put("title", post.getTitle());
+        jsonObject.put("body", post.getBody());
         return jsonObject;
     }
 
+    /**
+     * Переводит полученную запись из таблицы posts в формат превьюхи JSON с ограничением на количество символов
+     *
+     * @param post
+     * @return
+     */
     private JsonObject postToPreviewJSON(Posts post) {
 
         String preview = post.getBody();
-
-        if (preview.length()>400)
-            preview = preview.substring(0,400) + "...";
-
+        if (preview.length() > 400)
+            preview = preview.substring(0, 400) + "...";
         JsonObject jsonObject = new JsonObject();
-        jsonObject.put("id",post.getId());
-        jsonObject.put("title",post.getTitle());
-        jsonObject.put("preview",preview);
+        jsonObject.put("id", post.getId());
+        jsonObject.put("title", post.getTitle());
+        jsonObject.put("preview", preview);
         return jsonObject;
     }
 }
