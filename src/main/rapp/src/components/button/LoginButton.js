@@ -6,6 +6,10 @@ import Recover from "./lbmenu/Recover";
 import "./LoginButton.css";
 
 export default class LoginButton extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     state = {
         errorRepPassword: false,
         errorPassword: false,
@@ -151,7 +155,6 @@ export default class LoginButton extends React.Component {
                                     type: type,
                                     email: this.state.email,
                                     password: this.state.password,
-                                    repPassword: this.state.repPassword,
                                 };
                             else {
                                 p = true;
@@ -193,9 +196,11 @@ export default class LoginButton extends React.Component {
                         (result) => {
                             if (result.res === "sl") {
                                 this.resetError();
+                                this.props.action();
                                 this.setState({ show: false });
                             } else if (result.res === "srg") {
                                 this.resetError();
+                                this.props.action();
                                 this.setState({ show: false });
                             } else if (result.res === "src") {
                                 this.resetError();

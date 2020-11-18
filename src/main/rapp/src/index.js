@@ -25,7 +25,7 @@ ReactDOM.render(
                 <Route exact path={'/post/*'}>
                     <Post/>
                 </Route>
-                <Route exact path={'/profile'}>
+                <Route exact path={'/profile/*'}>
                     <Profile/>
                 </Route>
             </Switch>

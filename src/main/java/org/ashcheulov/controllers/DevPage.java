@@ -3,6 +3,7 @@ package org.ashcheulov.controllers;
 
 import io.vertx.core.json.JsonObject;
 import org.ashcheulov.models.DBService;
+import org.ashcheulov.models.tables.Users;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -10,9 +11,7 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import java.io.File;
-import java.util.Arrays;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Path("dev")
 public class DevPage {
@@ -36,31 +35,27 @@ public class DevPage {
     @GET
     @Path("img")
     public JsonObject getImg(@CookieParam("session") Cookie cookie) {
-//        return null;
         JsonObject jsonObject = new JsonObject();
         if (cookie != null) {
-            if (dbService.checkSession(cookie)) {
+            int id = dbService.checkSession(cookie);
+            if (id != -1) {
+                Users user = dbService.getUserById(id);
                 jsonObject.put("session", true);
-                jsonObject.put("href", "/dev/img/1");
+                jsonObject.put("img", user.getIco());
+                jsonObject.put("href", user.getId());
                 return jsonObject;
-            }
-            else System.out.println(cookie.toString());
+            } else System.out.println(cookie.toString());
         }
-//            if (cookie.getValue().equals("e1403c79-12a5-4f62-96af-31ec1662144f")) {
-//                jsonObject.put("session",true);
-//                jsonObject.put("href","/dev/img/1");
-//                return jsonObject;
-//            }
 
         jsonObject.put("session", false);
         return jsonObject;
     }
 
     @GET
-    @Path("img/1")
+    @Path("img/{id}")
     @Produces("image/png")
-    public File getImgByLink() {
-        return new File("../src/main/resources/favicon.ico");
+    public File getImgByLink(@PathParam("id") int id) {
+        return new File(String.format("../src/main/resources/avatars/%s.jpg", id));
     }
 
     @GET

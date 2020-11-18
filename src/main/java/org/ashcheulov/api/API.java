@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.ashcheulov.models.DBService;
+import org.ashcheulov.models.tables.Users;
+import org.ashcheulov.utils.Helper;
 
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -21,6 +23,9 @@ public class API {
     DBService dbService;
 
     private NewCookie cookie;
+
+    @Inject
+    private Helper helper;
 
     @GET
     @Path("/post/{id}")
@@ -39,12 +44,11 @@ public class API {
     @Path("system")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response system(JsonObject s) {
-        System.out.println(s.toString());
         switch (s.getString("type")) {
             case "login":
-                return Response.ok(login(s)).cookie(cookie).build();
+                return login(s);
             case "register":
-                return Response.ok(register(s)).build();
+                return register(s);
             case "recover":
                 return Response.ok(recover(s)).build();
             default:
@@ -52,34 +56,68 @@ public class API {
         }
     }
 
-    private JsonObject login(JsonObject req) {
+    @GET
+    @Path("profile/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProfile(@PathParam("id") int id, @CookieParam("session") Cookie cookie) {
         JsonObject jsonObject = new JsonObject();
-        if (dbService.login(req)) {
-            UUID uuid = UUID.randomUUID();
-            int user_id = 1;
-            cookie = new NewCookie("session",uuid.toString(),"/","localhost",1,"comment",10,false);
-            dbService.addSession(uuid,user_id);
-            jsonObject.put("res", "sl");
+        if (cookie!=null) {
+            int user_id = dbService.checkSession(cookie);
+            if (user_id != -1) {
+                Users user = dbService.getUserById(user_id);
+                jsonObject.put("body", user.getEmail() + "\n" + user.getRole());
+                return Response.ok(jsonObject).build();
+            } else {
+                jsonObject.put("body", "403 ОТКАЗАНО В ДОСТУПЕ");
+                return Response.status(403).entity(jsonObject).build();
+            }
+        } else {
+            jsonObject.put("body", "403 ОТКАЗАНО В ДОСТУПЕ");
+            return Response.status(403).entity(jsonObject).build();
         }
-        else
-            jsonObject.put("res","er");
-        return jsonObject;
+
     }
 
-    private JsonObject register(JsonObject req) {
+    private Response login(JsonObject req) {
+        Response.ResponseBuilder responseBuilder = Response.ok();
         JsonObject jsonObject = new JsonObject();
-        if (dbService.register(req))
-            jsonObject.put("res","srg");
-        else
-            jsonObject.put("res","erg");
-        return jsonObject;
+
+        int id = dbService.login(req);
+
+        if (id == -1) {
+            jsonObject.put("res", "er");
+        } else {
+            jsonObject.put("res", "sl");
+        }
+
+        responseBuilder.entity(jsonObject).cookie(helper.getNewSessionCookie(id));
+
+        return responseBuilder.build();
     }
+
+    private Response register(JsonObject req) {
+        Response.ResponseBuilder responseBuilder = Response.ok();
+
+        JsonObject jsonObject = new JsonObject();
+        int id = dbService.register(req);
+
+        if (id == -1) {
+            jsonObject.put("res", "er");
+        } else {
+            jsonObject.put("res", "sl");
+        }
+
+        responseBuilder.entity(jsonObject).cookie(helper.getNewSessionCookie(id));
+
+        return responseBuilder.build();
+    }
+
     private JsonObject recover(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
         if (dbService.recover(req))
-            jsonObject.put("res","src");
+            jsonObject.put("res", "src");
         else
-            jsonObject.put("res","erc");
+            jsonObject.put("res", "erc");
         return jsonObject;
     }
 }

@@ -25,6 +25,9 @@ public class Users {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "ico")
+    private String ico;
+
     @OneToMany(mappedBy = "author_id")
     private List<Posts> posts;
 
@@ -77,5 +80,13 @@ public class Users {
 
     public void setSessions(List<Sessions> sessions) {
         this.sessions = sessions;
+    }
+
+    public String getIco() {
+        return ico;
+    }
+
+    public void setIco(String ico) {
+        this.ico = ico;
     }
 }

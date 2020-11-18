@@ -15,7 +15,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.NewCookie;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,12 +72,12 @@ public class DBService {
 
     /**
      * Логин. На сервер поступает запрос на логин. Сервер обращается к бд. Ищет пользователя с указанным логином
-     * и паролем. Если находит, то возвращает true, иначе false
+     * и паролем. Если находит, то возвращает id
      *
      * @param req
      * @return
      */
-    public boolean login(JsonObject req) {
+    public int login(JsonObject req) {
         Users user = new Users();
         user.setEmail(req.getString("email"));
         user.setPassword(req.getString("password"));
@@ -89,9 +88,9 @@ public class DBService {
                 .setParameter("p", user.getPassword()).getResultList();
 
         if (usersList.size() == 1)
-            return true;
+            return usersList.get(0).getId();
         else
-            return false;
+            return -1;
     }
 
     /**
@@ -101,24 +100,30 @@ public class DBService {
      * @param req
      * @return
      */
-    public boolean register(JsonObject req) {
+    public int register(JsonObject req) {
         Users client = new Users();
         client.setEmail(req.getString("email"));
         client.setPassword(req.getString("password"));
         client.setRole("client");
 
-        List<Users> usersList = entityManager.createQuery("SELECT u FROM Users u WHERE u.email=:e and u.password=:p",
+        List<Users> usersList = entityManager.createQuery("SELECT u FROM Users u WHERE u.email=:e",
                 Users.class)
-                .setParameter("e", client.getEmail())
-                .setParameter("p", client.getPassword()).getResultList();
+                .setParameter("e", client.getEmail()).getResultList();
 
         if (usersList.size() == 0) {
             Session session = entityManager.unwrap(Session.class);
             session.save(client);
-            session.close();
-            return true;
+
+            usersList = entityManager.createQuery("SELECT u FROM Users u WHERE u.email=:e and u.password=:p",
+                    Users.class)
+                    .setParameter("e", client.getEmail())
+                    .setParameter("p", client.getPassword()).getResultList();
+
+            System.out.println(usersList.size());
+
+            return usersList.get(0).getId();
         } else
-            return false;
+            return -1;
     }
 
     /**
@@ -148,14 +153,15 @@ public class DBService {
 
         Session session = entityManager.unwrap(Session.class);
         session.save(sessions);
-        session.close();
     }
 
-    public boolean checkSession(Cookie cookie) {
+    public int checkSession(Cookie cookie) {
         List<Sessions> sessionsList = entityManager.createQuery("SELECT s FROM Sessions s WHERE s.uuid=:u",
-                Sessions.class).setParameter("u",UUID.fromString(cookie.getValue())).getResultList();
-        System.out.println(sessionsList.get(0).getUser_id());
-        return sessionsList.size() != 0;
+                Sessions.class).setParameter("u", UUID.fromString(cookie.getValue())).getResultList();
+        if (sessionsList.size() == 0)
+            return -1;
+        else
+            return sessionsList.get(0).getUsers().getId();
     }
 
     /**
@@ -188,5 +194,9 @@ public class DBService {
         jsonObject.put("title", post.getTitle());
         jsonObject.put("preview", preview);
         return jsonObject;
+    }
+
+    public Users getUserById(int id) {
+        return entityManager.find(Users.class, id);
     }
 }
