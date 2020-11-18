@@ -3,6 +3,7 @@ package org.ashcheulov.models;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.ashcheulov.models.tables.Posts;
+import org.ashcheulov.models.tables.Sessions;
 import org.ashcheulov.models.tables.Users;
 import org.hibernate.Session;
 
@@ -13,7 +14,10 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.NewCookie;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class DBService {
@@ -135,6 +139,23 @@ public class DBService {
             return true;
         else
             return false;
+    }
+
+    public void addSession(UUID uuid, int user_id) {
+        Sessions sessions = new Sessions();
+        sessions.setUser_id(user_id);
+        sessions.setUuid(uuid);
+
+        Session session = entityManager.unwrap(Session.class);
+        session.save(sessions);
+        session.close();
+    }
+
+    public boolean checkSession(Cookie cookie) {
+        List<Sessions> sessionsList = entityManager.createQuery("SELECT s FROM Sessions s WHERE s.uuid=:u",
+                Sessions.class).setParameter("u",UUID.fromString(cookie.getValue())).getResultList();
+        System.out.println(sessionsList.get(0).getUser_id());
+        return sessionsList.size() != 0;
     }
 
     /**

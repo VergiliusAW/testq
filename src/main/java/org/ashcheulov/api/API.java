@@ -6,9 +6,12 @@ import io.vertx.core.json.JsonObject;
 import org.ashcheulov.models.DBService;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import java.util.UUID;
 
 
 @Path("api")
@@ -16,6 +19,8 @@ public class API {
 
     @Inject
     DBService dbService;
+
+    private NewCookie cookie;
 
     @GET
     @Path("/post/{id}")
@@ -37,7 +42,7 @@ public class API {
         System.out.println(s.toString());
         switch (s.getString("type")) {
             case "login":
-                return Response.ok(login(s)).build();
+                return Response.ok(login(s)).cookie(cookie).build();
             case "register":
                 return Response.ok(register(s)).build();
             case "recover":
@@ -49,8 +54,13 @@ public class API {
 
     private JsonObject login(JsonObject req) {
         JsonObject jsonObject = new JsonObject();
-        if (dbService.login(req))
-            jsonObject.put("res","sl");
+        if (dbService.login(req)) {
+            UUID uuid = UUID.randomUUID();
+            int user_id = 1;
+            cookie = new NewCookie("session",uuid.toString(),"/","localhost",1,"comment",10,false);
+            dbService.addSession(uuid,user_id);
+            jsonObject.put("res", "sl");
+        }
         else
             jsonObject.put("res","er");
         return jsonObject;

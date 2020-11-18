@@ -23,9 +23,9 @@ public class DevPage {
     @GET
     public Response getDevPage(@CookieParam("session") Cookie cookie) {
 
-        File f = new File("/home/mikhail/Документы");
-        f.isDirectory();
-        Arrays.stream(f.listFiles()).collect(Collectors.toList()).forEach(i -> System.out.println(i));
+//        File f = new File("/home/mikhail/Документы");
+//        f.isDirectory();
+//        Arrays.stream(f.listFiles()).collect(Collectors.toList()).forEach(i -> System.out.println(i));
 //        if (cookie != null)
 //            if (cookie.getValue().equals("256fa90e-f71d-4667-b362-0c7d67d06724"))
 //                return Response.ok("success").build();
@@ -38,14 +38,21 @@ public class DevPage {
     public JsonObject getImg(@CookieParam("session") Cookie cookie) {
 //        return null;
         JsonObject jsonObject = new JsonObject();
-        if (cookie != null)
-            if (cookie.getValue().equals("e1403c79-12a5-4f62-96af-31ec1662144f")) {
-                jsonObject.put("session",true);
-                jsonObject.put("href","/dev/img/1");
+        if (cookie != null) {
+            if (dbService.checkSession(cookie)) {
+                jsonObject.put("session", true);
+                jsonObject.put("href", "/dev/img/1");
                 return jsonObject;
             }
             else System.out.println(cookie.toString());
-        jsonObject.put("session",false);
+        }
+//            if (cookie.getValue().equals("e1403c79-12a5-4f62-96af-31ec1662144f")) {
+//                jsonObject.put("session",true);
+//                jsonObject.put("href","/dev/img/1");
+//                return jsonObject;
+//            }
+
+        jsonObject.put("session", false);
         return jsonObject;
     }
 

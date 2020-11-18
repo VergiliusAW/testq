@@ -10,6 +10,13 @@ import BorI from './components/button/BorI'
 
 ReactDOM.render(
     <React.StrictMode>
+        <BorI/>
+    </React.StrictMode>,
+    document.getElementById('login')
+)
+
+ReactDOM.render(
+    <React.StrictMode>
         <Router>
             <Switch>
                 <Route exact path={'/'}>
@@ -26,13 +33,6 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('page-content')
 );
-
-ReactDOM.render(
-    <React.StrictMode>
-        <BorI/>
-    </React.StrictMode>,
-    document.getElementById('login')
-)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
