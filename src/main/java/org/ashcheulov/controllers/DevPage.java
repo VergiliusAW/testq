@@ -40,8 +40,13 @@ public class DevPage {
             int id = dbService.checkSession(cookie);
             if (id != -1) {
                 Users user = dbService.getUserById(id);
+                String img = user.getIco();
                 jsonObject.put("session", true);
-                jsonObject.put("img", user.getIco());
+                if (!img.equals("")) {
+                    jsonObject.put("img", "/dev/img/" + img);
+                } else {
+                    jsonObject.put("img", "/dev/img/ph");
+                }
                 jsonObject.put("href", user.getId());
                 return jsonObject;
             } else System.out.println(cookie.toString());
@@ -53,9 +58,16 @@ public class DevPage {
 
     @GET
     @Path("img/{id}")
-    @Produces("image/png")
-    public File getImgByLink(@PathParam("id") int id) {
+    @Produces("image/jpg")
+    public File getImgByLink(@PathParam("id") String id) {
         return new File(String.format("../src/main/resources/avatars/%s.jpg", id));
+    }
+
+    @GET
+    @Path("img/ph")
+    @Produces("image/png")
+    public File getPhImg() {
+        return new File("../src/main/resources/avatars/ph.png");
     }
 
     @GET

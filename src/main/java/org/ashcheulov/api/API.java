@@ -78,6 +78,22 @@ public class API {
 
     }
 
+    @POST
+    @Path("post/profile/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postPost(@PathParam("id") int id,JsonObject s, @CookieParam("session") Cookie cookie) {
+        System.out.println(s);
+        JsonObject jsonObject = new JsonObject();
+        if (!s.getString("body").equals("")) {
+            dbService.addPost(id,s);
+            jsonObject.put("res","success");
+            return Response.ok(jsonObject).build();
+        }
+        jsonObject.put("res","tryAgain");
+
+        return Response.ok(jsonObject).build();
+    }
+
     private Response login(JsonObject req) {
         Response.ResponseBuilder responseBuilder = Response.ok();
         JsonObject jsonObject = new JsonObject();

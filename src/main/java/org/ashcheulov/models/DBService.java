@@ -199,4 +199,15 @@ public class DBService {
     public Users getUserById(int id) {
         return entityManager.find(Users.class, id);
     }
+
+    public boolean addPost(int id, JsonObject s) {
+        Posts post = new Posts();
+        post.setAuthor_id(id);
+        post.setTitle(s.getString("title"));
+        post.setBody(s.getString("body").replace("\n","<br>"));
+
+        Session session = entityManager.unwrap(Session.class);
+        session.save(post);
+        return true;
+    }
 }

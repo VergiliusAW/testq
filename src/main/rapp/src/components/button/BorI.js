@@ -7,6 +7,7 @@ export default class BorI extends React.Component {
         session: false,
         img: "",
         href: "",
+        isLoading: true,
     };
 
     componentWillMount() {
@@ -24,9 +25,11 @@ export default class BorI extends React.Component {
                         this.setState({ img: result.img });
                         this.setState({ href: result.href });
                     }
+                    this.setState({ isLoading: false });
                 },
                 (error) => {
                     console.log(error);
+                    this.setState({ isLoading: false });
                 }
             );
     }
@@ -34,16 +37,23 @@ export default class BorI extends React.Component {
     render() {
         return (
             <>
-                {this.state.session && (
-                    <ProfileIco img={this.state.img} href={this.state.href} />
-                )}
-                {!this.state.session && (
-                    <LoginButton
-                        action={() => {
-                            this.getData();
-                            this.setState({ session: true });
-                        }}
-                    />
+                {!this.state.isLoading && (
+                    <>
+                        {this.state.session && (
+                            <ProfileIco
+                                img={this.state.img}
+                                href={this.state.href}
+                            />
+                        )}
+                        {!this.state.session && (
+                            <LoginButton
+                                action={() => {
+                                    this.getData();
+                                    this.setState({ session: true });
+                                }}
+                            />
+                        )}
+                    </>
                 )}
             </>
         );
