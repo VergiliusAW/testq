@@ -1,11 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "../button/Button";
 import "./Profile.css";
 
 export default class Profile extends React.Component {
     state = {
         isLoaded: false,
-        body: "",
+        body: [],
+        hrefs: [],
+        cl: false,
         data: {
             action: () => {
                 this.submit();
@@ -23,6 +26,10 @@ export default class Profile extends React.Component {
             .then((responseJson) => {
                 console.log(responseJson);
                 this.setState({ body: responseJson.body });
+                if (responseJson.res === "allow") {
+                    this.setState({ hrefs: responseJson.hrefs });
+                    this.setState({ cl: responseJson.cl });
+                }
                 this.setState({ isLoaded: true });
             })
             .catch((error) => {
@@ -61,25 +68,48 @@ export default class Profile extends React.Component {
             <>
                 {this.state.isLoaded && (
                     <div className={"profile"}>
-                        <div className={"profile-body"}>{this.state.body}</div>
                         {!(this.state.body === "403 ОТКАЗАНО В ДОСТУПЕ") && (
                             <>
-                                <div className={"form"}>
-                                    <span>Title</span>
-                                    <input
-                                        id={"input-title"}
-                                        type={"text"}
-                                    ></input>
-                                    <span>Body</span>
-                                    <textarea
-                                        id={"text"}
-                                        rows={"4"}
-                                        cols={"50"}
-                                        name={"comment"}
-                                    ></textarea>
+                                <div className={"profile-body"}>
+                                    {console.log(this.state.body[0])}
+                                    {this.state.body.map((post, index) => (
+                                        <Link
+                                            to={
+                                                "/post/" +
+                                                this.state.hrefs[index].id
+                                            }
+                                        >
+                                            <h4>{post.title}</h4>
+                                        </Link>
+                                    ))}
                                 </div>
-                                <Button data={this.state.data}>Submit</Button>
+                                {this.state.cl && (
+                                    <>
+                                        <div className={"form"}>
+                                            <span>Title</span>
+                                            <input
+                                                id={"input-title"}
+                                                type={"text"}
+                                            ></input>
+                                            <span>Body</span>
+                                            <textarea
+                                                id={"text"}
+                                                rows={"4"}
+                                                cols={"50"}
+                                                name={"comment"}
+                                            ></textarea>
+                                        </div>
+                                        <Button data={this.state.data}>
+                                            Submit
+                                        </Button>
+                                    </>
+                                )}
                             </>
+                        )}
+                        {this.state.body === "403 ОТКАЗАНО В ДОСТУПЕ" && (
+                            <div className={"profile-body"}>
+                                {this.state.body}
+                            </div>
                         )}
                     </div>
                 )}

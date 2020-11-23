@@ -63,15 +63,23 @@ public class API {
         JsonObject jsonObject = new JsonObject();
         if (cookie!=null) {
             int user_id = dbService.checkSession(cookie);
-            if (user_id != -1) {
-                Users user = dbService.getUserById(user_id);
-                jsonObject.put("body", user.getEmail() + "\n" + user.getRole());
+            Users user = dbService.getUserById(id);
+            jsonObject.put("res","allow");
+            JsonArray jsonArray = new JsonArray();
+            user.getPosts().forEach(post -> jsonArray.add(new JsonObject().put("title",post.getTitle())));
+            jsonObject.put("body",jsonArray);
+            JsonArray jA = new JsonArray();
+            user.getPosts().forEach(post -> jA.add(new JsonObject().put("id",post.getId())));
+            jsonObject.put("hrefs",jA);
+            if (user_id == id) {
+                jsonObject.put("cl",true);
                 return Response.ok(jsonObject).build();
             } else {
-                jsonObject.put("body", "403 ОТКАЗАНО В ДОСТУПЕ");
+                jsonObject.put("cl",false);
                 return Response.status(403).entity(jsonObject).build();
             }
         } else {
+            jsonObject.put("res","denied");
             jsonObject.put("body", "403 ОТКАЗАНО В ДОСТУПЕ");
             return Response.status(403).entity(jsonObject).build();
         }
