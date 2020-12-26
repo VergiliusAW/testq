@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+    border: 0;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

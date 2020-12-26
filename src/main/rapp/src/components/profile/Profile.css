@@ -1,0 +1,14 @@
+.profile {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile textarea {
+    resize: vertical;
+}
+
+.profile .form {
+    display: flex;
+    flex-direction: column;
+}

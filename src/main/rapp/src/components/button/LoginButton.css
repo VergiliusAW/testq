@@ -1,0 +1,119 @@
+.modal {
+    position: fixed;
+    top:0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.modal-body {
+    margin-bottom: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    width: 30rem;
+    /*height: 14rem;*/
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
+}
+
+/** COOL-MENU **/
+
+.modal-body .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.modal-body .title h4 {
+    margin: 0.751rem;
+}
+
+.modal-body .form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body .active {
+    color: #0070f3;
+}
+
+/** COOL-INPUT **/
+
+.cool-input {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 2px solid #eaeaea;;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.3rem;
+    transition: all 0.15s ease;
+}
+
+.cool-input input{
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    margin-left: 0.3rem;
+}
+
+.cool-input span {
+    margin-right: auto;
+    margin-top: -1rem;
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    background: #fff;
+    text-align: left;
+}
+
+/** FOOTER **/
+
+.modal-body .footer {
+    display: flex;
+    flex-direction: row;
+}
+
+.modal-body .footer .enter{
+    margin-left: 0.3rem;
+}
+.modal-body .footer .enter:hover,
+.modal-body .footer .enter:focus,
+.modal-body .footer .enter:active {
+    color: #0070f3;
+}
+
+.modal-body .footer .cancel{
+    margin-left: auto;
+    margin-right: 0.3rem;
+}
+
+.modal-body .footer .cancel:hover,
+.modal-body .footer .cancel:focus,
+.modal-body .footer .cancel:active {
+    color: #e63946;
+}
+
+.error {
+    border: 2px solid #e63946;
+    color: #e63946;
+}
+
+.focused {
+    border: 2px solid #0070f3;
+}
+
+@media screen and (max-width: 375px) {
+    .modal {
+        padding-top: 0;
+    }
+}

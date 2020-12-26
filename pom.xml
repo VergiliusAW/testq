@@ -30,24 +30,34 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <!--  WEBJARS DEPENDENCIES  -->
+<!--    &lt;!&ndash;  WEBJARS DEPENDENCIES  &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>io.quarkus</groupId>-->
+<!--      <artifactId>quarkus-webjars-locator</artifactId>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.webjars.npm/github-com-juliangarnier-anime &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.webjars.npm</groupId>-->
+<!--      <artifactId>github-com-juliangarnier-anime</artifactId>-->
+<!--      <version>3.0.1</version>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.webjars.npm/popper.js &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.webjars.npm</groupId>-->
+<!--      <artifactId>popper.js</artifactId>-->
+<!--      <version>1.16.1</version>-->
+<!--    </dependency>-->
+
+<!--   HIBERNATE   -->
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-webjars-locator</artifactId>
+      <artifactId>quarkus-hibernate-orm</artifactId>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.webjars.npm/github-com-juliangarnier-anime -->
+    <!-- JDBC driver dependencies -->
     <dependency>
-      <groupId>org.webjars.npm</groupId>
-      <artifactId>github-com-juliangarnier-anime</artifactId>
-      <version>3.0.1</version>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.webjars.npm/popper.js -->
-    <dependency>
-      <groupId>org.webjars.npm</groupId>
-      <artifactId>popper.js</artifactId>
-      <version>1.16.1</version>
-    </dependency>
-
 
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -69,6 +79,16 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>8.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+
   </dependencies>
   <build>
     <plugins>
