@@ -13,7 +13,6 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import java.io.File;
 import java.util.UUID;
 
 
@@ -27,14 +26,6 @@ public class API {
 
     @Inject
     private Helper helper;
-
-
-    @GET
-    @Path("cert")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public File getSert() {
-        return new File("D:\\ForkRepo\\testq\\src\\main\\resources\\sysadmin@krista.ru_2019.crt");
-    }
 
     @GET
     @Path("/post/{id}")
