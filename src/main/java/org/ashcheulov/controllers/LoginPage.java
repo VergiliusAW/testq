@@ -1,12 +1,8 @@
 package org.ashcheulov.controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -36,7 +32,7 @@ public class LoginPage {
         if (email.equals("mikhail@local.com") && password.equals("123456")) {
             System.out.println("mikhail login");
             JsonObject json = new JsonObject();
-            json.put("location","/profile");
+            json.put("location", "/profile");
             return Response.status(200).entity(json.toString()).cookie(NewCookie.valueOf("session")).build();
         } else
             return Response.status(403).contentLocation(URI.create("/login")).build();

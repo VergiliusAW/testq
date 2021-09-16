@@ -69,3 +69,20 @@ footer {
         font-size: 0.75rem;
     }
 }
+
+.recover-page {
+    margin: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.recover {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 15rem;
+}
+
+.recover input {
+    margin-bottom: 2rem;
+}

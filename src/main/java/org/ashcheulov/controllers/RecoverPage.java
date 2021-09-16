@@ -17,7 +17,7 @@ public class RecoverPage {
     public Response getRecoverPage() {
         String text;
         try {
-            text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/www/views/recover.html"), "UTF-8").useDelimiter("\\A").next();
+            text = new Scanner(this.getClass().getResourceAsStream("/META-INF/resources/recover.html"), "UTF-8").useDelimiter("\\A").next();
         } catch (NullPointerException e) {
             throw new InternalServerErrorException();
         }

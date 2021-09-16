@@ -40,7 +40,7 @@ public class DevPage {
             int id = dbService.checkSession(cookie);
             if (id != -1) {
                 Users user = dbService.getUserById(id);
-                String img = user.getIco();
+                String img = user.getIco() != null ? user.getIco() : "";
                 jsonObject.put("session", true);
                 if (!img.equals("")) {
                     jsonObject.put("img", "/dev/img/" + img);
